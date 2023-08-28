@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">StudyTimerAndroidApp</string>
+
+
+    <!-- Timer -->
+    <string name="timer_title_text">時間を計測しよう</string>
+
 </resources>
