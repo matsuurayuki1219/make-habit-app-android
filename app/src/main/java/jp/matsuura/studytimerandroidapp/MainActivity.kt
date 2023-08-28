@@ -37,6 +37,7 @@ import jp.matsuura.studytimerandroidapp.ui.home.homeScreens
 import jp.matsuura.studytimerandroidapp.ui.other.otherScreenRoute
 import jp.matsuura.studytimerandroidapp.ui.other.otherScreens
 import jp.matsuura.studytimerandroidapp.ui.theme.StudyTimerAndroidAppTheme
+import jp.matsuura.studytimerandroidapp.ui.timer.navigateToTimerScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -47,9 +48,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             StudyTimerAndroidAppTheme {
                 val navController = rememberNavController()
+                val appState = rememberAppState(navController = navController)
                 Scaffold(
                     bottomBar = {
-                        AppNavigationBar(modifier = Modifier, navController = navController)
+                        if (appState.shouldShowBottomBar) {
+                            AppNavigationBar(
+                                modifier = Modifier,
+                                tabs = appState.bottomBarTabs,
+                                currentRoute = appState.currentRoute,
+                                navigateToRoute = appState::navigateToBottomBarRoute
+                            )
+                        }
                     },
                     containerColor = MaterialTheme.colorScheme.background,
                 ) {
@@ -70,7 +79,10 @@ private fun AppNavHost(
         startDestination = homeScreenRoute,
         modifier = modifier,
     ) {
-        homeScreens()
+        homeScreens(
+            onFABClicked = navController::navigateToTimerScreen,
+            onNavigateUp = navController::popBackStack
+        )
         goalSettingScreens()
         otherScreens()
     }
@@ -79,19 +91,14 @@ private fun AppNavHost(
 @Composable
 private fun AppNavigationBar(
     modifier: Modifier,
-    navController: NavHostController,
+    tabs: List<NavigationBarItem>,
+    currentRoute: String?,
+    navigateToRoute: (String) -> Unit,
 ) {
-    val screens = listOf(
-        NavigationBarItem.Home,
-        NavigationBarItem.GoalSetting,
-        NavigationBarItem.Other,
-    )
     NavigationBar(
         modifier = modifier,
     ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-        screens.forEach { screen ->
+        tabs.forEach { screen ->
             NavigationBarItem(
                 label = {
                     Text(text = screen.title)
@@ -101,13 +108,7 @@ private fun AppNavigationBar(
                 },
                 selected = currentRoute == screen.route,
                 onClick = {
-                    navController.navigate(screen.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                    navigateToRoute(screen.route)
                 },
                 colors = NavigationBarItemDefaults.colors(
                     unselectedTextColor = Color.Gray, selectedTextColor = Color.White
