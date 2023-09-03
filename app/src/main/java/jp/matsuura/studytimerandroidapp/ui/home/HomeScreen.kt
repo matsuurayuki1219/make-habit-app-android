@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import jp.matsuura.studytimerandroidapp.ui.category_selection.CategorySelectionScreen
+import jp.matsuura.studytimerandroidapp.ui.category_selection.categorySelectionScreenRoute
 import jp.matsuura.studytimerandroidapp.ui.common.AppTopBar
 import jp.matsuura.studytimerandroidapp.ui.timer.TimerScreen
 import jp.matsuura.studytimerandroidapp.ui.timer.timerScreenRoute
@@ -25,6 +27,11 @@ fun NavGraphBuilder.homeScreens(
     composable(homeScreenRoute) {
         HomeScreen(
             onFABClicked = onFABClicked,
+        )
+    }
+    composable(categorySelectionScreenRoute) {
+        CategorySelectionScreen(
+            onNavigationIconClicked = onNavigateUp,
         )
     }
     composable(timerScreenRoute) {

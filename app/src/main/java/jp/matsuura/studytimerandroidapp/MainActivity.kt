@@ -24,6 +24,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import jp.matsuura.studytimerandroidapp.ui.category_selection.navigateToCategorySelectionScreen
 import jp.matsuura.studytimerandroidapp.ui.goal.goalSettingScreenRoute
 import jp.matsuura.studytimerandroidapp.ui.goal.goalSettingScreens
 import jp.matsuura.studytimerandroidapp.ui.home.homeScreenRoute
@@ -74,7 +75,7 @@ private fun AppNavHost(
         modifier = modifier,
     ) {
         homeScreens(
-            onFABClicked = navController::navigateToTimerScreen,
+            onFABClicked = navController::navigateToCategorySelectionScreen,
             onNavigateUp = navController::popBackStack
         )
         goalSettingScreens()

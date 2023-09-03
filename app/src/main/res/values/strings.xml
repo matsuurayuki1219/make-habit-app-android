@@ -2,7 +2,10 @@
     <string name="app_name">StudyTimerAndroidApp</string>
 
 
-    <!-- Timer -->
+    <!-- Timer Screen -->
     <string name="timer_title_text">時間を計測しよう</string>
+
+    <!-- Category Selection Screen -->
+    <string name="category_selection_title_text">選択</string>
 
 </resources>
