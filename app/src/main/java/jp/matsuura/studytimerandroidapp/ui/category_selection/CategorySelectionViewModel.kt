@@ -2,7 +2,6 @@ package jp.matsuura.studytimerandroidapp.ui.category_selection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.matsuura.studytimerandroidapp.domain.GetAllCategoryUseCase
 import jp.matsuura.studytimerandroidapp.domain.InsertCategoryUseCase
@@ -14,8 +13,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
-import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,10 +28,10 @@ class CategorySelectionViewModel @Inject constructor(
     val uiEvent = _uiEvent.receiveAsFlow()
 
     init {
-        handleCategory()
+        fetchCategory()
     }
 
-    private fun handleCategory() {
+    private fun fetchCategory() {
         getAllCategory().onEach {
             _uiState.value = _uiState.value.copy(categories = it)
         }.catch {
@@ -42,14 +39,24 @@ class CategorySelectionViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    fun onCategoryClicked(category: CategoryModel) {
+        val selectedCategory = _uiState.value.selectedCategory
+        if (selectedCategory != null && selectedCategory == category) return
+        _uiState.value = _uiState.value.copy(
+            selectedCategory = category,
+        )
+    }
+
     data class UiState(
         val isProgressVisible: Boolean,
         val categories: List<CategoryModel>,
+        val selectedCategory: CategoryModel?,
     ) {
         companion object {
             fun initValue() = UiState(
                 isProgressVisible = false,
                 categories = emptyList(),
+                selectedCategory = null,
             )
         }
     }

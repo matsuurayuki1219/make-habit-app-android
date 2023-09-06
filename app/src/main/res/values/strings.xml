@@ -2,6 +2,10 @@
     <string name="app_name">StudyTimerAndroidApp</string>
 
 
+    <!-- Common -->
+    <string name="common_unknown_error_message">想定外のエラーが発生しました。</string>
+    <string name="common_next">次へ</string>
+
     <!-- Timer Screen -->
     <string name="timer_title_text">時間を計測しよう</string>
 
