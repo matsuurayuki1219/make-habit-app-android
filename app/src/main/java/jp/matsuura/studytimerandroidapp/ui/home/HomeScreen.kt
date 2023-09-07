@@ -23,6 +23,7 @@ const val homeScreenRoute = "homeScreen"
 fun NavGraphBuilder.homeScreens(
     onFABClicked: () -> Unit,
     onNavigateUp: () -> Unit,
+    onNavigateToTimer: (Int) -> Unit,
 ) {
     composable(homeScreenRoute) {
         HomeScreen(
@@ -32,11 +33,12 @@ fun NavGraphBuilder.homeScreens(
     composable(categorySelectionScreenRoute) {
         CategorySelectionScreen(
             onNavigationIconClicked = onNavigateUp,
+            onNavigateToTimerScreen = onNavigateToTimer,
         )
     }
     composable(timerScreenRoute) {
         TimerScreen(
-            onNavigationIconClicked = onNavigateUp
+            onNavigationIconClicked = onNavigateUp,
         )
     }
 }

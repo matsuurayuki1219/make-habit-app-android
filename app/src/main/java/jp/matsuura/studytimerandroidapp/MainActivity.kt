@@ -76,7 +76,8 @@ private fun AppNavHost(
     ) {
         homeScreens(
             onFABClicked = navController::navigateToCategorySelectionScreen,
-            onNavigateUp = navController::popBackStack
+            onNavigateUp = navController::popBackStack,
+            onNavigateToTimer = navController::navigateToTimerScreen
         )
         goalSettingScreens()
         otherScreens()

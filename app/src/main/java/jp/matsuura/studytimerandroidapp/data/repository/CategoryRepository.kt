@@ -18,6 +18,12 @@ class CategoryRepository @Inject constructor(
         return categoryDao.getAll()
     }
 
+    suspend fun getCategory(categoryId: Int): CategoryDbEntity {
+        return withContext(Dispatchers.IO) {
+            categoryDao.getById(categoryId = categoryId)
+        }
+    }
+
     suspend fun insertCategory(categoryName: String) {
         withContext(Dispatchers.IO) {
             val entity = CategoryDbEntity(

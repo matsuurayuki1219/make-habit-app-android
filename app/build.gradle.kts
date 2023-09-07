@@ -85,4 +85,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
+
+    // timber
+    implementation("com.jakewharton.timber:timber:5.0.1")
 }

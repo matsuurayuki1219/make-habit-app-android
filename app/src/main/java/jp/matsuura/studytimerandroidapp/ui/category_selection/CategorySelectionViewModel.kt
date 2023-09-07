@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,6 +48,15 @@ class CategorySelectionViewModel @Inject constructor(
         )
     }
 
+    fun onNextButtonClicked() {
+        val selectedCategory = _uiState.value.selectedCategory
+        if (selectedCategory != null) {
+            viewModelScope.launch {
+                _uiEvent.send(UiEvent.GotoTimerScreen(id = selectedCategory.id))
+            }
+        }
+    }
+
     data class UiState(
         val isProgressVisible: Boolean,
         val categories: List<CategoryModel>,
@@ -63,5 +73,6 @@ class CategorySelectionViewModel @Inject constructor(
 
     sealed interface UiEvent {
         object UnknownError : UiEvent
+        data class GotoTimerScreen(val id: Int) : UiEvent
     }
 }

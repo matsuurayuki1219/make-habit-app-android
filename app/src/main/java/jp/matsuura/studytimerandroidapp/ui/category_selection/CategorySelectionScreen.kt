@@ -40,13 +40,17 @@ fun NavController.navigateToCategorySelectionScreen() {
 fun CategorySelectionScreen(
     viewModel: CategorySelectionViewModel = hiltViewModel(),
     onNavigationIconClicked: () -> Unit,
+    onNavigateToTimerScreen: (Int) -> Unit,
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
     viewModel.uiEvent.observeWithLifecycle {
         when (it) {
-            CategorySelectionViewModel.UiEvent.UnknownError -> {
+            is CategorySelectionViewModel.UiEvent.UnknownError -> {
                 snackBarHostState.showSnackbar(context.getString(R.string.common_unknown_error_message))
+            }
+            is CategorySelectionViewModel.UiEvent.GotoTimerScreen -> {
+                onNavigateToTimerScreen(it.id)
             }
         }
     }
@@ -56,6 +60,7 @@ fun CategorySelectionScreen(
         uiState = uiState,
         onNavigationIconClicked = onNavigationIconClicked,
         onCategoryClicked = viewModel::onCategoryClicked,
+        onNextButtonClicked = viewModel::onNextButtonClicked
     )
 }
 
@@ -65,6 +70,7 @@ private fun CategorySelectionScreen(
     uiState: CategorySelectionViewModel.UiState,
     onNavigationIconClicked: () -> Unit,
     onCategoryClicked: (CategoryModel) -> Unit,
+    onNextButtonClicked: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -100,7 +106,7 @@ private fun CategorySelectionScreen(
                     .padding(horizontal = 20.dp),
                 text = stringResource(id = R.string.common_next),
                 isEnabled = uiState.selectedCategory != null,
-                onClick = {},
+                onClick = onNextButtonClicked,
             )
             Spacer(modifier = Modifier.height(30.dp))
         }
