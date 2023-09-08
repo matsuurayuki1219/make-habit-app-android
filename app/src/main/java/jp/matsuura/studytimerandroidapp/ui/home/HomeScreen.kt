@@ -11,11 +11,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import jp.matsuura.studytimerandroidapp.ui.category_selection.CategorySelectionScreen
 import jp.matsuura.studytimerandroidapp.ui.category_selection.categorySelectionScreenRoute
 import jp.matsuura.studytimerandroidapp.ui.common.AppTopBar
 import jp.matsuura.studytimerandroidapp.ui.timer.TimerScreen
+import jp.matsuura.studytimerandroidapp.ui.timer.categoryIdArg
 import jp.matsuura.studytimerandroidapp.ui.timer.timerScreenRoute
 
 const val homeScreenRoute = "homeScreen"
@@ -36,7 +39,10 @@ fun NavGraphBuilder.homeScreens(
             onNavigateToTimerScreen = onNavigateToTimer,
         )
     }
-    composable(timerScreenRoute) {
+    composable(
+        route = timerScreenRoute,
+        arguments = listOf(navArgument(categoryIdArg) { type = NavType.IntType }),
+    ) {
         TimerScreen(
             onNavigationIconClicked = onNavigateUp,
         )

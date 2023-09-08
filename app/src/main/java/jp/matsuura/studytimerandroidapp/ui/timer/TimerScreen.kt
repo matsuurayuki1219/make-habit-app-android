@@ -16,9 +16,9 @@ import androidx.navigation.NavController
 import jp.matsuura.studytimerandroidapp.R
 import jp.matsuura.studytimerandroidapp.ui.common.AppBackTopBar
 
-private const val categoryIdArg = "categoryId"
+const val categoryIdArg = "categoryId"
 
-const val timerScreenRoute = "timer/${categoryIdArg}"
+const val timerScreenRoute = "timer/{$categoryIdArg}"
 
 class TimerScreenArgs(val categoryId: Int) {
     constructor(savedStateHandle: SavedStateHandle) :
