@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.matsuura.studytimerandroidapp.domain.GetCategoryUseCase
+import jp.matsuura.studytimerandroidapp.model.CategoryModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -47,8 +48,10 @@ class TimerViewModel @Inject constructor(
                 _uiState.value = _uiState.value.copy(isProgressVisible = true)
                 getCategory(categoryId = categoryId)
             }.onSuccess {
-                _uiState.value = _uiState.value.copy(isProgressVisible = false)
-                Timber.d("test")
+                _uiState.value = _uiState.value.copy(
+                    isProgressVisible = false,
+                    category = it,
+                )
             }.onFailure {
                 _uiState.value = _uiState.value.copy(isProgressVisible = false)
                 _uiEvent.send(UiEvent.UnknownError)
@@ -60,6 +63,7 @@ class TimerViewModel @Inject constructor(
         when (_uiState.value.timerState) {
             TimerState.Start -> stopTimer()
             TimerState.Stop -> startTimer()
+            TimerState.Initial -> startTimer()
         }
     }
 
@@ -82,13 +86,15 @@ class TimerViewModel @Inject constructor(
         val isProgressVisible: Boolean,
         val millSec: Int,
         val timerState: TimerState,
+        val category: CategoryModel?,
     ) {
 
         companion object {
             fun initValue(): UiState = UiState(
                 isProgressVisible = false,
                 millSec = 0,
-                timerState = TimerState.Stop,
+                timerState = TimerState.Initial,
+                category = null,
             )
         }
 
@@ -102,6 +108,7 @@ class TimerViewModel @Inject constructor(
     }
 
     sealed class TimerState {
+        object Initial : TimerState()
         object Start : TimerState()
         object Stop : TimerState()
     }
