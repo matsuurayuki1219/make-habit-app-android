@@ -18,6 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -28,6 +30,7 @@ import jp.matsuura.studytimerandroidapp.model.CategoryModel
 import jp.matsuura.studytimerandroidapp.ui.category_selection.components.CategoryItem
 import jp.matsuura.studytimerandroidapp.ui.common.AppBackTopBar
 import jp.matsuura.studytimerandroidapp.ui.common.AppButton
+import jp.matsuura.studytimerandroidapp.ui.theme.StudyTimerAndroidAppTheme
 import jp.matsuura.studytimerandroidapp.ui.timer.TimerScreen
 
 const val categorySelectionScreenRoute = "categorySelectionScreen"
@@ -72,43 +75,58 @@ private fun CategorySelectionScreen(
     onCategoryClicked: (CategoryModel) -> Unit,
     onNextButtonClicked: () -> Unit,
 ) {
-    Scaffold(
-        topBar = {
-            AppBackTopBar(
-                title = stringResource(id = R.string.category_selection_title_text),
-                onNavigationIconClicked = {
-                    onNavigationIconClicked()
+    StudyTimerAndroidAppTheme {
+        Scaffold(
+            topBar = {
+                AppBackTopBar(
+                    title = stringResource(id = R.string.category_selection_title_text),
+                    onNavigationIconClicked = {
+                        onNavigationIconClicked()
+                    }
+                )
+            },
+        ) {
+            Column(modifier = Modifier.padding(it)) {
+                Spacer(modifier = Modifier.height(30.dp))
+                LazyColumn {
+                    items(uiState.categories) { category ->
+                        CategoryItem(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp),
+                            category = category,
+                            isSelected = uiState.selectedCategory == category,
+                            onClick = {
+                                onCategoryClicked(category)
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                    }
                 }
-            )
-        },
-    ) {
-        Column(modifier = Modifier.padding(it)) {
-            Spacer(modifier = Modifier.height(30.dp))
-            LazyColumn {
-                items(uiState.categories) { category ->
-                    CategoryItem(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp),
-                        category = category,
-                        isSelected = uiState.selectedCategory == category,
-                        onClick = {
-                            onCategoryClicked(category)
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
-                }
+                Spacer(modifier = Modifier.weight(1f))
+                AppButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    text = stringResource(id = R.string.common_next),
+                    isEnabled = uiState.selectedCategory != null,
+                    onClick = onNextButtonClicked,
+                )
+                Spacer(modifier = Modifier.height(30.dp))
             }
-            Spacer(modifier = Modifier.weight(1f))
-            AppButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
-                text = stringResource(id = R.string.common_next),
-                isEnabled = uiState.selectedCategory != null,
-                onClick = onNextButtonClicked,
-            )
-            Spacer(modifier = Modifier.height(30.dp))
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CategorySelectionScreenPreview(
+    @PreviewParameter(PreviewUiStateProvider::class) uiState: CategorySelectionViewModel.UiState,
+) {
+    CategorySelectionScreen(
+        uiState = uiState,
+        onCategoryClicked = {},
+        onNextButtonClicked = {},
+        onNavigationIconClicked = {},
+    )
 }

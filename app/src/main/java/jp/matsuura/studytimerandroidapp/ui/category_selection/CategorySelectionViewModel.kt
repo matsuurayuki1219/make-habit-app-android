@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.matsuura.studytimerandroidapp.domain.GetAllCategoryUseCase
-import jp.matsuura.studytimerandroidapp.domain.InsertCategoryUseCase
 import jp.matsuura.studytimerandroidapp.model.CategoryModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +18,6 @@ import javax.inject.Inject
 @HiltViewModel
 class CategorySelectionViewModel @Inject constructor(
     private val getAllCategory: GetAllCategoryUseCase,
-    private val insert: InsertCategoryUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UiState.initValue())
