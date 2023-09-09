@@ -15,7 +15,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import jp.matsuura.studytimerandroidapp.ui.category_selection.CategorySelectionScreen
-import jp.matsuura.studytimerandroidapp.ui.category_selection.categorySelectionScreenRoute
+import jp.matsuura.studytimerandroidapp.ui.category_selection.navigation.categorySelectionScreenRoute
 import jp.matsuura.studytimerandroidapp.ui.common.AppTopBar
 import jp.matsuura.studytimerandroidapp.ui.timer.TimerScreen
 import jp.matsuura.studytimerandroidapp.ui.timer.navigation.categoryIdArg

@@ -33,12 +33,6 @@ import jp.matsuura.studytimerandroidapp.ui.common.AppButton
 import jp.matsuura.studytimerandroidapp.ui.theme.StudyTimerAndroidAppTheme
 import jp.matsuura.studytimerandroidapp.ui.timer.TimerScreen
 
-const val categorySelectionScreenRoute = "categorySelectionScreen"
-
-fun NavController.navigateToCategorySelectionScreen() {
-    navigate(categorySelectionScreenRoute)
-}
-
 @Composable
 fun CategorySelectionScreen(
     viewModel: CategorySelectionViewModel = hiltViewModel(),
