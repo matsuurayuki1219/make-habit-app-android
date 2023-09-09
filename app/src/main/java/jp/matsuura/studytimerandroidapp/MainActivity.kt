@@ -32,7 +32,7 @@ import jp.matsuura.studytimerandroidapp.ui.home.homeScreens
 import jp.matsuura.studytimerandroidapp.ui.other.otherScreenRoute
 import jp.matsuura.studytimerandroidapp.ui.other.otherScreens
 import jp.matsuura.studytimerandroidapp.ui.theme.StudyTimerAndroidAppTheme
-import jp.matsuura.studytimerandroidapp.ui.timer.navigateToTimerScreen
+import jp.matsuura.studytimerandroidapp.ui.timer.navigation.navigateToTimerScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

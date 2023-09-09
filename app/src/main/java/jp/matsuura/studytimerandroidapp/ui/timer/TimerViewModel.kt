@@ -1,21 +1,24 @@
 package jp.matsuura.studytimerandroidapp.ui.timer
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.matsuura.studytimerandroidapp.domain.GetCategoryUseCase
 import jp.matsuura.studytimerandroidapp.model.CategoryModel
+import jp.matsuura.studytimerandroidapp.ui.timer.navigation.TimerScreenArgs
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.util.Timer
 import java.util.TimerTask
 import javax.inject.Inject
 import kotlin.concurrent.scheduleAtFixedRate
+import kotlin.time.Duration.Companion.milliseconds
 
 @HiltViewModel
 class TimerViewModel @Inject constructor(
@@ -98,12 +101,9 @@ class TimerViewModel @Inject constructor(
             )
         }
 
-        private val hour = millSec / 1000 / 60 / 24
-        private val minute = millSec / 1000 / 60
-        private val second = millSec / 1000 % 60
-        private val millSecond = (millSec - minute * 1000 * 60 - second * 1000) / 10
-
-        val timerText = "%02d:%02d:%02d:%02d".format(hour, minute, second, millSecond)
+        val hour = millSec / 1000 / 60 / 24
+        val minute = millSec / 1000 / 60
+        val second = millSec / 1000 % 60
 
     }
 

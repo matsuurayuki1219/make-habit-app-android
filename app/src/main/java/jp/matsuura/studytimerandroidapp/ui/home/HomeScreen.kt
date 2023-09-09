@@ -18,8 +18,8 @@ import jp.matsuura.studytimerandroidapp.ui.category_selection.CategorySelectionS
 import jp.matsuura.studytimerandroidapp.ui.category_selection.categorySelectionScreenRoute
 import jp.matsuura.studytimerandroidapp.ui.common.AppTopBar
 import jp.matsuura.studytimerandroidapp.ui.timer.TimerScreen
-import jp.matsuura.studytimerandroidapp.ui.timer.categoryIdArg
-import jp.matsuura.studytimerandroidapp.ui.timer.timerScreenRoute
+import jp.matsuura.studytimerandroidapp.ui.timer.navigation.categoryIdArg
+import jp.matsuura.studytimerandroidapp.ui.timer.navigation.timerScreenRoute
 
 const val homeScreenRoute = "homeScreen"
 

@@ -2,7 +2,6 @@ package jp.matsuura.studytimerandroidapp.ui.timer
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -13,6 +12,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
@@ -22,24 +23,7 @@ import jp.matsuura.studytimerandroidapp.R
 import jp.matsuura.studytimerandroidapp.ui.common.AppBackTopBar
 import jp.matsuura.studytimerandroidapp.ui.timer.components.TimerButton
 import jp.matsuura.studytimerandroidapp.ui.timer.components.TimerButtonState
-
-const val categoryIdArg = "categoryId"
-
-const val timerScreenRoute = "timer/{$categoryIdArg}"
-
-class TimerScreenArgs(val categoryId: Int) {
-    constructor(savedStateHandle: SavedStateHandle) :
-            this(checkNotNull(savedStateHandle[categoryIdArg]) as Int)
-}
-
-fun NavController.navigateToTimerScreen(categoryId: Int) {
-    navigate(
-        timerScreenRoute.replace(
-            "{$categoryIdArg}",
-            categoryId.toString(),
-        ),
-    )
-}
+import jp.matsuura.studytimerandroidapp.ui.timer.components.TimerItem
 
 @Composable
 fun TimerScreen(
@@ -75,12 +59,18 @@ private fun TimerScreen(
             modifier = Modifier.padding(it),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-
+            Spacer(modifier = Modifier.height(24.dp))
             uiState.category?.let { category ->
                 Text(text = category.categoryName)
             }
-
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(24.dp))
+            TimerItem(
+                modifier = Modifier.weight(1f),
+                hours = uiState.hour,
+                minutes = uiState.minute,
+                seconds = uiState.second,
+            )
+            Spacer(modifier = Modifier.height(24.dp))
             TimerButton(
                 state = when (uiState.timerState) {
                     TimerViewModel.TimerState.Initial -> TimerButtonState.INITIAL
@@ -92,4 +82,16 @@ private fun TimerScreen(
             Spacer(modifier = Modifier.height(60.dp))
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun TimerScreenPreviews(
+    @PreviewParameter(PreviewUiStateProvider::class) uiState: TimerViewModel.UiState,
+) {
+    TimerScreen(
+        uiState = uiState,
+        onTimerButtonClicked = {},
+        onNavigationIconClicked = {},
+    )
 }
