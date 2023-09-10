@@ -4,7 +4,6 @@ import jp.matsuura.studytimerandroidapp.data.repository.CategoryRepository
 import jp.matsuura.studytimerandroidapp.data.repository.TransactionRepository
 import jp.matsuura.studytimerandroidapp.data.toModel
 import jp.matsuura.studytimerandroidapp.model.TransactionDetailModel
-import jp.matsuura.studytimerandroidapp.model.TransactionModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,7 +27,7 @@ class GetDetailTransactionUseCase @Inject constructor(
             categoryName = category.categoryName,
             startedAt = transaction.startedAt,
             endedAt = transaction.endedAt,
-            durationSec = transaction.durationSec,
+            durationMillSec = transaction.durationSec,
             createdAt = transaction.createdAt,
             updatedAt = transaction.updatedAt,
         )

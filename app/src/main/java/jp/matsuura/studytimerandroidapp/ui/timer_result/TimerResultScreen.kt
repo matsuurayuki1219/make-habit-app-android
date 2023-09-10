@@ -27,7 +27,6 @@ import jp.matsuura.studytimerandroidapp.ui.common.AppBackTopBar
 import jp.matsuura.studytimerandroidapp.ui.common.AppButton
 import jp.matsuura.studytimerandroidapp.ui.theme.StudyTimerAndroidAppTheme
 import jp.matsuura.studytimerandroidapp.ui.timer.PreviewUiStateProvider
-import jp.matsuura.studytimerandroidapp.ui.timer.TimerViewModel
 
 @Composable
 fun TimerResultScreen(
@@ -86,7 +85,7 @@ private fun TimerResultScreen(
                     Text(text = "transactionId: ${transaction.transactionId}")
                     Text(text = "categoryId: ${transaction.categoryId}")
                     Text(text = "transactionName: ${transaction.categoryName}")
-                    Text(text = "durationSec: ${transaction.durationSec}")
+                    Text(text = "durationSec: ${transaction.durationMillSec}")
                 }
                 AppButton(
                     modifier = Modifier.fillMaxWidth(),

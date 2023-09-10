@@ -3,6 +3,7 @@ package jp.matsuura.studytimerandroidapp.data.repository
 import jp.matsuura.studytimerandroidapp.data.database.dao.TransactionDao
 import jp.matsuura.studytimerandroidapp.data.database.entity.TransactionDbEntity
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import java.time.Instant
 import javax.inject.Inject
@@ -13,12 +14,16 @@ class TransactionRepository @Inject constructor(
     private val transactionDao: TransactionDao,
 ) {
 
+    fun getAllTransaction(): Flow<List<TransactionDbEntity>> {
+        return transactionDao.getAll()
+    }
+
     suspend fun insertTransaction(
         categoryId: Int,
         startedAt: Instant,
         endedAt: Instant,
         durationSec: Int,
-    ): Long{
+    ): Long {
         return withContext(Dispatchers.IO) {
             val entity = TransactionDbEntity(
                 id = 0,
