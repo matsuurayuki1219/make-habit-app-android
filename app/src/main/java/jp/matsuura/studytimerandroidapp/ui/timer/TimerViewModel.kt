@@ -81,13 +81,14 @@ class TimerViewModel @Inject constructor(
     fun onTimerFinishClicked() {
         val startedAt = startedAt ?: return
         val endedAt = Instant.now()
+        val durationSec = _uiState.value.millSec
         viewModelScope.launch {
-
             // TODO: toInt()にしても問題ないかを確認する。
             val transactionId = insertTransaction(
                 categoryId = categoryId,
                 startedAt = startedAt,
                 endedAt = endedAt,
+                durationSec = durationSec,
             ).toInt()
             _uiEvent.send(UiEvent.Success(transactionId = transactionId, categoryId = categoryId))
         }

@@ -17,6 +17,7 @@ class TransactionRepository @Inject constructor(
         categoryId: Int,
         startedAt: Instant,
         endedAt: Instant,
+        durationSec: Int,
     ): Long{
         return withContext(Dispatchers.IO) {
             val entity = TransactionDbEntity(
@@ -26,8 +27,21 @@ class TransactionRepository @Inject constructor(
                 endedAt = endedAt,
                 createdAt = Instant.now(),
                 updatedAt = Instant.now(),
+                durationSec = durationSec,
             )
             transactionDao.insert(transaction = entity)
+        }
+    }
+
+    suspend fun getTransaction(
+        transactionId: Int,
+        categoryId: Int,
+    ): TransactionDbEntity {
+        return withContext(Dispatchers.IO) {
+            transactionDao.getById(
+                transactionId = transactionId,
+                categoryId = categoryId,
+            )
         }
     }
 }

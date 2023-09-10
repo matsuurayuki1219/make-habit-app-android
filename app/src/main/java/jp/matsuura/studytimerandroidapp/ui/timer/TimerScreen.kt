@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,6 +56,7 @@ fun TimerScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     TimerScreen(
         uiState = uiState,
+        snackBarHostState = snackBarHostState,
         onTimerButtonClicked = viewModel::onTimerButtonClicked,
         onNavigationIconClicked = onNavigationIconClicked,
         onFinishButtonClicked = viewModel::onTimerFinishClicked
@@ -65,6 +67,7 @@ fun TimerScreen(
 @Composable
 private fun TimerScreen(
     uiState: TimerViewModel.UiState,
+    snackBarHostState: SnackbarHostState,
     onTimerButtonClicked: () -> Unit,
     onNavigationIconClicked: () -> Unit,
     onFinishButtonClicked: () -> Unit,
@@ -78,6 +81,9 @@ private fun TimerScreen(
                         onNavigationIconClicked()
                     }
                 )
+            },
+            snackbarHost = {
+                SnackbarHost(hostState = snackBarHostState)
             },
         ) {
             Column(
@@ -118,6 +124,7 @@ private fun TimerScreenPreviews(
 ) {
     TimerScreen(
         uiState = uiState,
+        snackBarHostState =  remember { SnackbarHostState() },
         onTimerButtonClicked = {},
         onNavigationIconClicked = {},
         onFinishButtonClicked = {},

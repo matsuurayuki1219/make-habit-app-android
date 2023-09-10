@@ -14,11 +14,13 @@ class InsertTransactionUseCase @Inject constructor(
         categoryId: Int,
         startedAt: Instant,
         endedAt: Instant,
+        durationSec: Int,
     ): Long {
         return repository.insertTransaction(
             categoryId = categoryId,
             startedAt = startedAt,
             endedAt = endedAt,
+            durationSec = durationSec,
         )
     }
 }

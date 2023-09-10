@@ -12,7 +12,7 @@ interface TransactionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(transaction: TransactionDbEntity): Long
 
-    @Query("SELECT * FROM `transaction` WHERE category_id = :categoryId")
-    fun getById(categoryId: Int): TransactionDbEntity
+    @Query("SELECT * FROM `transaction` WHERE id = :transactionId AND category_id = :categoryId")
+    fun getById(transactionId: Int, categoryId: Int): TransactionDbEntity
 
 }

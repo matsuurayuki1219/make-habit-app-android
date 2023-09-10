@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,6 +56,7 @@ fun CategorySelectionScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     CategorySelectionScreen(
         uiState = uiState,
+        snackBarHostState = snackBarHostState,
         onNavigationIconClicked = onNavigationIconClicked,
         onCategoryClicked = viewModel::onCategoryClicked,
         onNextButtonClicked = viewModel::onNextButtonClicked
@@ -65,6 +67,7 @@ fun CategorySelectionScreen(
 @Composable
 private fun CategorySelectionScreen(
     uiState: CategorySelectionViewModel.UiState,
+    snackBarHostState: SnackbarHostState,
     onNavigationIconClicked: () -> Unit,
     onCategoryClicked: (CategoryModel) -> Unit,
     onNextButtonClicked: () -> Unit,
@@ -78,6 +81,9 @@ private fun CategorySelectionScreen(
                         onNavigationIconClicked()
                     }
                 )
+            },
+            snackbarHost = {
+                SnackbarHost(hostState = snackBarHostState)
             },
         ) {
             Column(modifier = Modifier.padding(it)) {
@@ -119,6 +125,7 @@ private fun CategorySelectionScreenPreview(
 ) {
     CategorySelectionScreen(
         uiState = uiState,
+        snackBarHostState =  remember { SnackbarHostState() },
         onCategoryClicked = {},
         onNextButtonClicked = {},
         onNavigationIconClicked = {},
