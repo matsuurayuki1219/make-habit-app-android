@@ -21,6 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -37,11 +39,13 @@ import jp.matsuura.studytimerandroidapp.ui.category_selection.navigation.categor
 import jp.matsuura.studytimerandroidapp.ui.common.AppTopBar
 import jp.matsuura.studytimerandroidapp.ui.home.components.TransactionItem
 import jp.matsuura.studytimerandroidapp.ui.theme.StudyTimerAndroidAppTheme
+import jp.matsuura.studytimerandroidapp.ui.timer.PreviewUiStateProvider
 import jp.matsuura.studytimerandroidapp.ui.timer.TimerScreen
 import jp.matsuura.studytimerandroidapp.ui.timer.TimerViewModel
 import jp.matsuura.studytimerandroidapp.ui.timer.navigation.categoryIdArg
 import jp.matsuura.studytimerandroidapp.ui.timer.navigation.timerScreenRoute
 import jp.matsuura.studytimerandroidapp.ui.timer_result.TimerResultScreen
+import jp.matsuura.studytimerandroidapp.ui.timer_result.TimerResultViewModel
 import jp.matsuura.studytimerandroidapp.ui.timer_result.navigation.timerScreenResultRoute
 import jp.matsuura.studytimerandroidapp.ui.timer_result.navigation.transactionIdArg
 
@@ -116,4 +120,17 @@ private fun HomeScreen(
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HomeScreenPreview(
+    @PreviewParameter(PreviewUiStateProvider::class) uiState: HomeViewModel.UiState,
+) {
+    HomeScreen(
+        uiState = uiState,
+        snackBarHostState = remember { SnackbarHostState() },
+        onFABClicked = {},
+        onTransactionItemClicked = {},
+    )
 }
