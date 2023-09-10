@@ -5,6 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import jp.matsuura.studytimerandroidapp.ui.add_category.AddCategoryScreen
+import jp.matsuura.studytimerandroidapp.ui.add_category.navigation.addCategoryScreenRoute
 import jp.matsuura.studytimerandroidapp.ui.category_selection.CategorySelectionScreen
 import jp.matsuura.studytimerandroidapp.ui.category_selection.navigation.categorySelectionScreenRoute
 import jp.matsuura.studytimerandroidapp.ui.home.HomeScreen
@@ -23,6 +25,7 @@ fun NavGraphBuilder.homeScreens(
     onNavigateToTimer: (Int) -> Unit,
     onNavigateToTimerResult: (transactionId: Int, categoryId: Int) -> Unit,
     onNavigateToHome: () -> Unit,
+    onNavigateToAddCategory: () -> Unit,
 ) {
     composable(homeScreenRoute) {
         HomeScreen(
@@ -33,6 +36,7 @@ fun NavGraphBuilder.homeScreens(
         CategorySelectionScreen(
             onNavigationIconClicked = onNavigateUp,
             onNavigateToTimerScreen = onNavigateToTimer,
+            onNavigateToAddCategoryScreen = onNavigateToAddCategory,
         )
     }
     composable(
@@ -56,6 +60,11 @@ fun NavGraphBuilder.homeScreens(
         TimerResultScreen(
             onNavigationIconClicked = onNavigateToHome,
             onFinishButtonClicked = onNavigateToHome,
+        )
+    }
+    composable(addCategoryScreenRoute) {
+        AddCategoryScreen(
+            onNavigationIconClicked = onNavigateUp,
         )
     }
 }

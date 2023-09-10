@@ -17,5 +17,9 @@
 
     <!-- Category Selection Screen -->
     <string name="category_selection_title_text">選択</string>
+    <string name="category_selection_add_category">カテゴリーを追加する</string>
+
+    <!-- Add Category Screen -->
+    <string name="add_category_title_text">カテゴリーを追加しよう</string>
 
 </resources>

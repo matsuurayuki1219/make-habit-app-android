@@ -24,6 +24,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import jp.matsuura.studytimerandroidapp.ui.add_category.navigation.navigateToAddCategoryScreen
 import jp.matsuura.studytimerandroidapp.ui.category_selection.navigation.navigateToCategorySelectionScreen
 import jp.matsuura.studytimerandroidapp.ui.goal.goalSettingScreenRoute
 import jp.matsuura.studytimerandroidapp.ui.goal.goalSettingScreens
@@ -82,6 +83,7 @@ private fun AppNavHost(
             onNavigateToTimer = navController::navigateToTimerScreen,
             onNavigateToTimerResult = navController::navigateToTimerResultScreen,
             onNavigateToHome = navController::navigateToHomeScreen,
+            onNavigateToAddCategory = navController::navigateToAddCategoryScreen,
         )
         goalSettingScreens()
         otherScreens()
