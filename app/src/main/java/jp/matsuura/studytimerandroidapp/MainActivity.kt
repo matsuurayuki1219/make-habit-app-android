@@ -27,8 +27,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.matsuura.studytimerandroidapp.ui.category_selection.navigation.navigateToCategorySelectionScreen
 import jp.matsuura.studytimerandroidapp.ui.goal.goalSettingScreenRoute
 import jp.matsuura.studytimerandroidapp.ui.goal.goalSettingScreens
-import jp.matsuura.studytimerandroidapp.ui.home.homeScreenRoute
-import jp.matsuura.studytimerandroidapp.ui.home.homeScreens
+import jp.matsuura.studytimerandroidapp.ui.home.navigation.homeScreenRoute
+import jp.matsuura.studytimerandroidapp.ui.home.navigation.homeScreens
+import jp.matsuura.studytimerandroidapp.ui.home.navigation.navigateToHomeScreen
 import jp.matsuura.studytimerandroidapp.ui.other.otherScreenRoute
 import jp.matsuura.studytimerandroidapp.ui.other.otherScreens
 import jp.matsuura.studytimerandroidapp.ui.theme.StudyTimerAndroidAppTheme
@@ -80,6 +81,7 @@ private fun AppNavHost(
             onNavigateUp = navController::popBackStack,
             onNavigateToTimer = navController::navigateToTimerScreen,
             onNavigateToTimerResult = navController::navigateToTimerResultScreen,
+            onNavigateToHome = navController::navigateToHomeScreen,
         )
         goalSettingScreens()
         otherScreens()

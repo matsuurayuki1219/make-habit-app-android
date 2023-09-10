@@ -11,6 +11,7 @@ data class TransactionDbEntity(
     @ColumnInfo(name = "category_id") val categoryId: Int,
     @ColumnInfo(name = "started_at") val startedAt: Instant,
     @ColumnInfo(name = "ended_at") val endedAt: Instant,
+    // FIXME: 変数名をmillSecに変更する。
     @ColumnInfo(name = "duration_sec") val durationSec: Int,
     @ColumnInfo(name = "created_at") val createdAt: Instant,
     @ColumnInfo(name = "updated_at") val updatedAt: Instant,
