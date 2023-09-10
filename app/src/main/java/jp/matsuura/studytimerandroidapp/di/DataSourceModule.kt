@@ -26,4 +26,8 @@ object DataSourceModule {
     @Provides
     fun provideCategoryDao(db: AppDatabase) = db.categoryDao()
 
+    @Singleton
+    @Provides
+    fun provideTransactionDao(db: AppDatabase) = db.transactionDao()
+
 }

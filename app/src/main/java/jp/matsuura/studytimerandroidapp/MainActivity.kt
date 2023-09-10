@@ -33,6 +33,7 @@ import jp.matsuura.studytimerandroidapp.ui.other.otherScreenRoute
 import jp.matsuura.studytimerandroidapp.ui.other.otherScreens
 import jp.matsuura.studytimerandroidapp.ui.theme.StudyTimerAndroidAppTheme
 import jp.matsuura.studytimerandroidapp.ui.timer.navigation.navigateToTimerScreen
+import jp.matsuura.studytimerandroidapp.ui.timer_result.navigation.navigateToTimerResultScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -77,7 +78,8 @@ private fun AppNavHost(
         homeScreens(
             onFABClicked = navController::navigateToCategorySelectionScreen,
             onNavigateUp = navController::popBackStack,
-            onNavigateToTimer = navController::navigateToTimerScreen
+            onNavigateToTimer = navController::navigateToTimerScreen,
+            onNavigateToTimerResult = navController::navigateToTimerResultScreen,
         )
         goalSettingScreens()
         otherScreens()

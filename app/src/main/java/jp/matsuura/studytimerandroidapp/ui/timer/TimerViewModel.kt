@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.matsuura.studytimerandroidapp.domain.GetCategoryUseCase
+import jp.matsuura.studytimerandroidapp.domain.InsertTransactionUseCase
 import jp.matsuura.studytimerandroidapp.model.CategoryModel
 import jp.matsuura.studytimerandroidapp.ui.timer.navigation.TimerScreenArgs
 import kotlinx.coroutines.channels.Channel
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import java.time.Instant
 import java.util.Timer
 import java.util.TimerTask
 import javax.inject.Inject
@@ -24,6 +26,7 @@ import kotlin.time.Duration.Companion.milliseconds
 class TimerViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getCategory: GetCategoryUseCase,
+    private val insertTransaction: InsertTransactionUseCase,
 ) : ViewModel() {
 
     private val args = TimerScreenArgs(savedStateHandle)
@@ -33,9 +36,11 @@ class TimerViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     private val _uiEvent = Channel<UiEvent>()
-    private val uiEvent = _uiEvent.receiveAsFlow()
+    val uiEvent = _uiEvent.receiveAsFlow()
 
     private var timer = Timer()
+
+    private var startedAt: Instant? = null
 
     private val timerTask: TimerTask.() -> Unit = {
         viewModelScope.launch {
@@ -66,7 +71,25 @@ class TimerViewModel @Inject constructor(
         when (_uiState.value.timerState) {
             TimerState.Start -> stopTimer()
             TimerState.Stop -> startTimer()
-            TimerState.Initial -> startTimer()
+            TimerState.Initial -> {
+                startedAt = Instant.now()
+                startTimer()
+            }
+        }
+    }
+
+    fun onTimerFinishClicked() {
+        val startedAt = startedAt ?: return
+        val endedAt = Instant.now()
+        viewModelScope.launch {
+
+            // TODO: toInt()にしても問題ないかを確認する。
+            val transactionId = insertTransaction(
+                categoryId = categoryId,
+                startedAt = startedAt,
+                endedAt = endedAt,
+            ).toInt()
+            _uiEvent.send(UiEvent.Success(transactionId = transactionId, categoryId = categoryId))
         }
     }
 
@@ -115,6 +138,7 @@ class TimerViewModel @Inject constructor(
 
     sealed interface UiEvent {
         object UnknownError : UiEvent
+        data class Success(val transactionId: Int, val categoryId: Int) : UiEvent
     }
 
     companion object {

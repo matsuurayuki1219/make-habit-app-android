@@ -9,6 +9,9 @@
     <!-- Timer Screen -->
     <string name="timer_title_text">時間を計測しよう</string>
 
+    <!-- Timer Result Screen -->
+    <string name="timer_result_title_text">お疲れ様でした</string>
+
     <!-- Category Selection Screen -->
     <string name="category_selection_title_text">選択</string>
 

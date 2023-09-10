@@ -20,6 +20,9 @@ import jp.matsuura.studytimerandroidapp.ui.common.AppTopBar
 import jp.matsuura.studytimerandroidapp.ui.timer.TimerScreen
 import jp.matsuura.studytimerandroidapp.ui.timer.navigation.categoryIdArg
 import jp.matsuura.studytimerandroidapp.ui.timer.navigation.timerScreenRoute
+import jp.matsuura.studytimerandroidapp.ui.timer_result.TimerResultScreen
+import jp.matsuura.studytimerandroidapp.ui.timer_result.navigation.timerScreenResultRoute
+import jp.matsuura.studytimerandroidapp.ui.timer_result.navigation.transactionIdArg
 
 const val homeScreenRoute = "homeScreen"
 
@@ -27,6 +30,7 @@ fun NavGraphBuilder.homeScreens(
     onFABClicked: () -> Unit,
     onNavigateUp: () -> Unit,
     onNavigateToTimer: (Int) -> Unit,
+    onNavigateToTimerResult: (transactionId: Int, categoryId: Int) -> Unit,
 ) {
     composable(homeScreenRoute) {
         HomeScreen(
@@ -41,10 +45,24 @@ fun NavGraphBuilder.homeScreens(
     }
     composable(
         route = timerScreenRoute,
-        arguments = listOf(navArgument(categoryIdArg) { type = NavType.IntType }),
+        arguments = listOf(
+            navArgument(categoryIdArg) { type = NavType.IntType },
+        ),
     ) {
         TimerScreen(
             onNavigationIconClicked = onNavigateUp,
+            onNavigateToResultScreen = onNavigateToTimerResult,
+        )
+    }
+    composable(
+        route = timerScreenResultRoute,
+        arguments = listOf(
+            navArgument(categoryIdArg) { type = NavType.IntType },
+            navArgument(transactionIdArg) { type = NavType.IntType },
+        ),
+    ) {
+        TimerResultScreen(
+            onNavigationIconClicked = {},
         )
     }
 }

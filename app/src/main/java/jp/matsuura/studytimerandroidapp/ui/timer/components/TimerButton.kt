@@ -24,6 +24,7 @@ fun TimerButton(
     modifier: Modifier = Modifier,
     state: TimerButtonState,
     onClick: () -> Unit,
+    onFinish: () -> Unit,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -46,7 +47,7 @@ fun TimerButton(
                 ) {
                     Spacer(modifier = Modifier.weight(1f))
                     StopButton (
-                        onClick = onClick
+                        onClick = onFinish
                     )
                     Spacer(modifier = Modifier.width(30.dp))
                     StartButton (
@@ -89,6 +90,7 @@ private fun TimerButtonInitialPreviews() {
     TimerButton(
         state = TimerButtonState.INITIAL,
         onClick = {},
+        onFinish = {},
     )
 }
 
@@ -98,6 +100,7 @@ private fun TimerButtonIsCalculatingPreviews() {
     TimerButton(
         state = TimerButtonState.IS_CALCULATING,
         onClick = {},
+        onFinish = {},
     )
 }
 
@@ -107,5 +110,6 @@ private fun TimerButtonIsStoppingPreviews() {
     TimerButton(
         state = TimerButtonState.IS_STOPPING,
         onClick = {},
+        onFinish = {},
     )
 }
