@@ -5,6 +5,7 @@
     <string name="common_unknown_error_message">想定外のエラーが発生しました。</string>
     <string name="common_next">次へ</string>
     <string name="common_finish">終了</string>
+    <string name="common_ok">OK</string>
 
     <!-- Home Screen -->
     <string name="home_title_text">習慣化を始めよう</string>
@@ -21,5 +22,8 @@
 
     <!-- Add Category Screen -->
     <string name="add_category_title_text">カテゴリーを追加しよう</string>
+    <string name="add_category_message">カテゴリ名</string>
+    <string name="add_category_duplicate_error_message">入力したカテゴリーは既に登録されています</string>
+    <string name="add_category_register_success_message">%1$sを登録しました</string>
 
 </resources>

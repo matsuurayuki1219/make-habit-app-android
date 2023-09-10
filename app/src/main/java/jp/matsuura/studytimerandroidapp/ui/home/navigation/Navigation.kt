@@ -65,6 +65,7 @@ fun NavGraphBuilder.homeScreens(
     composable(addCategoryScreenRoute) {
         AddCategoryScreen(
             onNavigationIconClicked = onNavigateUp,
+            onNavigateUp = onNavigateUp,
         )
     }
 }
