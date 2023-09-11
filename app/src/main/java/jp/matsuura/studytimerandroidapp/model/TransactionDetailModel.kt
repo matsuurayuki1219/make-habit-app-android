@@ -1,7 +1,9 @@
 package jp.matsuura.studytimerandroidapp.model
 
+import jp.matsuura.studytimerandroidapp.extension.toLocalDate
 import jp.matsuura.studytimerandroidapp.extension.toOffsetDateTime
 import java.time.Instant
+import java.time.LocalDate
 import java.util.Date
 
 data class TransactionDetailModel(
@@ -18,5 +20,6 @@ data class TransactionDetailModel(
     val durationSec = durationMillSec / 1000
     val dateOfStartedAt = startedAt.toOffsetDateTime()
     val dateOfEndedAt = endedAt.toOffsetDateTime()
+    val date: LocalDate = createdAt.toLocalDate()
 
 }

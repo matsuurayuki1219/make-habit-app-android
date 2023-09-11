@@ -1,6 +1,5 @@
 package jp.matsuura.studytimerandroidapp.ui.home.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -19,15 +18,28 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import jp.matsuura.studytimerandroidapp.extension.toDayOfWeek
 import jp.matsuura.studytimerandroidapp.extension.toOffsetDateTime
 import jp.matsuura.studytimerandroidapp.extension.toTime
 import jp.matsuura.studytimerandroidapp.model.TransactionDetailModel
 import jp.matsuura.studytimerandroidapp.ui.theme.Purple40
-import jp.matsuura.studytimerandroidapp.ui.theme.Purple80
 import java.time.Instant
+import java.time.LocalDate
 
 @Composable
-fun TransactionItem(
+fun TransactionHeaderItem(
+    modifier: Modifier = Modifier,
+    date: LocalDate,
+) {
+    Text(
+        modifier = modifier,
+        text = date.year.toString() + "/" + date.monthValue.toString() + "/" + date.dayOfMonth + " (" + date.toDayOfWeek() + ")",
+        fontSize = 16.sp,
+    )
+}
+
+@Composable
+fun TransactionSectionItem(
     modifier: Modifier = Modifier,
     transaction: TransactionDetailModel,
     onClick: (TransactionDetailModel) -> Unit,
@@ -64,8 +76,16 @@ fun TransactionItem(
 
 @Preview(showBackground = true)
 @Composable
-private fun TransactionItemPreview() {
-    TransactionItem(
+private fun TransactionHeaderItemPreview() {
+    TransactionHeaderItem(
+        date = LocalDate.now(),
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun TransactionSectionItemPreview() {
+    TransactionSectionItem(
         modifier = Modifier.fillMaxWidth(),
         transaction = TransactionDetailModel(
             transactionId = 1,

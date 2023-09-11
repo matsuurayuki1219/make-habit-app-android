@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.matsuura.studytimerandroidapp.domain.GetAllTransactionUseCase
 import jp.matsuura.studytimerandroidapp.model.TransactionDetailModel
+import jp.matsuura.studytimerandroidapp.model.TransactionModel
 import jp.matsuura.studytimerandroidapp.ui.timer.TimerViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,11 +15,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getAllTransaction: GetAllTransactionUseCase,
+    getAllTransaction: GetAllTransactionUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UiState.initValue())
@@ -28,9 +30,16 @@ class HomeViewModel @Inject constructor(
     val uiEvent = _uiEvent.receiveAsFlow()
 
     init {
-        getAllTransaction().onEach {
+        getAllTransaction().onEach { transactions ->
+            val groups = transactions.groupBy { it.date }.entries.sortedByDescending { it.key }
+            val items = mutableListOf<UiItem>()
+            groups.forEach {
+                items.add(UiItem.Header(date = it.key))
+                items.addAll(it.value.sortedByDescending { transaction -> transaction.createdAt }
+                    .map { transaction -> UiItem.Section(transaction = transaction) })
+            }
             _uiState.value = _uiState.value.copy(
-                transactions = it,
+                uiItems = items,
             )
         }.catch {
             _uiEvent.send(UiEvent.UnknownError)
@@ -39,14 +48,19 @@ class HomeViewModel @Inject constructor(
 
     data class UiState(
         val isProgressVisible: Boolean,
-        val transactions: List<TransactionDetailModel>,
+        val uiItems: List<UiItem>,
     ) {
         companion object {
             fun initValue() = UiState(
                 isProgressVisible = false,
-                transactions = emptyList(),
+                uiItems = emptyList(),
             )
         }
+    }
+
+    sealed interface UiItem {
+        data class Header(val date: LocalDate) : UiItem
+        data class Section(val transaction: TransactionDetailModel) : UiItem
     }
 
     sealed interface UiEvent {

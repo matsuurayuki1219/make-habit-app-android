@@ -1,6 +1,5 @@
 package jp.matsuura.studytimerandroidapp.ui.home
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,7 +13,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -26,28 +24,14 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
-import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import jp.matsuura.studytimerandroidapp.NavigationBarItem
 import jp.matsuura.studytimerandroidapp.R
 import jp.matsuura.studytimerandroidapp.extension.observeWithLifecycle
 import jp.matsuura.studytimerandroidapp.model.TransactionDetailModel
-import jp.matsuura.studytimerandroidapp.ui.category_selection.CategorySelectionScreen
-import jp.matsuura.studytimerandroidapp.ui.category_selection.navigation.categorySelectionScreenRoute
 import jp.matsuura.studytimerandroidapp.ui.common.AppTopBar
-import jp.matsuura.studytimerandroidapp.ui.home.components.TransactionItem
+import jp.matsuura.studytimerandroidapp.ui.home.components.TransactionHeaderItem
+import jp.matsuura.studytimerandroidapp.ui.home.components.TransactionSectionItem
 import jp.matsuura.studytimerandroidapp.ui.theme.StudyTimerAndroidAppTheme
 import jp.matsuura.studytimerandroidapp.ui.timer.PreviewUiStateProvider
-import jp.matsuura.studytimerandroidapp.ui.timer.TimerScreen
-import jp.matsuura.studytimerandroidapp.ui.timer.TimerViewModel
-import jp.matsuura.studytimerandroidapp.ui.timer.navigation.categoryIdArg
-import jp.matsuura.studytimerandroidapp.ui.timer.navigation.timerScreenRoute
-import jp.matsuura.studytimerandroidapp.ui.timer_result.TimerResultScreen
-import jp.matsuura.studytimerandroidapp.ui.timer_result.TimerResultViewModel
-import jp.matsuura.studytimerandroidapp.ui.timer_result.navigation.timerScreenResultRoute
-import jp.matsuura.studytimerandroidapp.ui.timer_result.navigation.transactionIdArg
 
 @Composable
 fun HomeScreen(
@@ -110,12 +94,20 @@ private fun HomeScreen(
                     Spacer(modifier = Modifier.height(30.dp))
                 }
 
-                items(uiState.transactions) { transaction ->
-                    TransactionItem(
-                        transaction = transaction,
-                        onClick = onTransactionItemClicked,
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
+                items(uiState.uiItems) { transaction ->
+                    when (transaction) {
+                        is HomeViewModel.UiItem.Header -> {
+                            TransactionHeaderItem(date = transaction.date)
+                            Spacer(modifier = Modifier.height(16.dp))
+                        }
+                        is HomeViewModel.UiItem.Section -> {
+                            TransactionSectionItem(
+                                transaction = transaction.transaction,
+                                onClick = onTransactionItemClicked,
+                            )
+                            Spacer(modifier = Modifier.height(24.dp))
+                        }
+                    }
                 }
             }
         }
