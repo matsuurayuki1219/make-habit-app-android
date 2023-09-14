@@ -71,6 +71,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    // constraint-layout
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+
     // dagger-hilt
     implementation("com.google.dagger:hilt-android:2.47")
     kapt("com.google.dagger:hilt-android-compiler:2.47")

@@ -15,6 +15,10 @@
 
     <!-- Timer Result Screen -->
     <string name="timer_result_title_text">お疲れ様でした</string>
+    <string name="timer_result_sum_title">合計時間は・・・</string>
+    <string name="timer_result_schedule_title">記録</string>
+    <string name="timer_result_schedule_start_title">開始時間</string>
+    <string name="timer_result_schedule_end_title">終了時間</string>
 
     <!-- Category Selection Screen -->
     <string name="category_selection_title_text">選択</string>

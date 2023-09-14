@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -19,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jp.matsuura.studytimerandroidapp.R
@@ -26,7 +28,8 @@ import jp.matsuura.studytimerandroidapp.extension.observeWithLifecycle
 import jp.matsuura.studytimerandroidapp.ui.common.AppBackTopBar
 import jp.matsuura.studytimerandroidapp.ui.common.AppButton
 import jp.matsuura.studytimerandroidapp.ui.theme.StudyTimerAndroidAppTheme
-import jp.matsuura.studytimerandroidapp.ui.timer.PreviewUiStateProvider
+import jp.matsuura.studytimerandroidapp.ui.timer_result.components.ScheduleItem
+import jp.matsuura.studytimerandroidapp.ui.timer_result.components.SumTimeItem
 
 @Composable
 fun TimerResultScreen(
@@ -41,7 +44,9 @@ fun TimerResultScreen(
     viewModel.uiEvent.observeWithLifecycle {
         when (it) {
             is TimerResultViewModel.UiEvent.UnknownError -> {
-                snackBarHostState.showSnackbar(context.getString(R.string.common_unknown_error_message))
+                snackBarHostState.showSnackbar(
+                    context.getString(R.string.common_unknown_error_message)
+                )
             }
         }
     }
@@ -80,19 +85,57 @@ private fun TimerResultScreen(
             Column(
                 modifier = Modifier.padding(it),
             ) {
-                Spacer(modifier = Modifier.height(30.dp))
                 uiState.transaction?.let { transaction ->
-                    Text(text = "transactionId: ${transaction.transactionId}")
-                    Text(text = "categoryId: ${transaction.categoryId}")
-                    Text(text = "transactionName: ${transaction.categoryName}")
-                    Text(text = "durationSec: ${transaction.durationMillSec}")
+
+                    Column(
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(
+                            text = transaction.categoryName,
+                            fontSize = 24.sp,
+                            modifier = Modifier
+                                .padding(start = 16.dp)
+                                .padding(vertical = 24.dp),
+                        )
+
+                        Divider(modifier = Modifier.height(1.dp))
+
+                        ScheduleItem(
+                            modifier = Modifier.padding(top = 24.dp, bottom = 30.dp),
+                            startData = uiState.transaction.dateOfStartedAt,
+                            endData = uiState.transaction.dateOfEndedAt,
+                            onStartDateClick = {},
+                            onEndDateClick = {},
+                            onStartTimeClick = {},
+                            onEndTimeClick = {},
+                        )
+
+                        Divider(modifier = Modifier.height(1.dp))
+
+                        Text(
+                            modifier = Modifier.padding(top = 24.dp, start = 16.dp),
+                            text = stringResource(id = R.string.timer_result_sum_title),
+                            fontSize = 16.sp,
+                        )
+
+                        SumTimeItem(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 24.dp),
+                            durationMillSec = uiState.transaction.durationMillSec,
+                        )
+
+                    }
+
+                    AppButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 24.dp),
+                        text = stringResource(id = R.string.common_finish),
+                        onClick = onFinishButtonClicked,
+                    )
+                    Spacer(modifier = Modifier.height(30.dp))
                 }
-                AppButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(id = R.string.common_finish),
-                    onClick = onFinishButtonClicked,
-                )
-                Spacer(modifier = Modifier.height(30.dp))
             }
         }
     }
