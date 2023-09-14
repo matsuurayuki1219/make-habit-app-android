@@ -42,13 +42,13 @@ fun TransactionHeaderItem(
 fun TransactionSectionItem(
     modifier: Modifier = Modifier,
     transaction: TransactionDetailModel,
-    onClick: (TransactionDetailModel) -> Unit,
+    onClick: (transactionId: Int, categoryId: Int) -> Unit,
 ) {
     Row(
         modifier = modifier
             .border(width = 1.dp, color = Purple40, shape = RoundedCornerShape(8.dp))
             .clip(RoundedCornerShape(8.dp))
-            .clickable { onClick(transaction) }
+            .clickable { onClick(transaction.transactionId, transaction.categoryId) }
             .padding(horizontal = 16.dp, vertical = 8.dp),
     ) {
         Column(
@@ -97,6 +97,6 @@ private fun TransactionSectionItemPreview() {
             createdAt = Instant.now(),
             updatedAt = Instant.now(),
         ),
-        onClick = {},
+        onClick = { _, _ ->  },
     )
 }

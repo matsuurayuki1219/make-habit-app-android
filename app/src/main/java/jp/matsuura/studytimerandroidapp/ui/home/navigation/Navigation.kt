@@ -30,6 +30,7 @@ fun NavGraphBuilder.homeScreens(
     composable(homeScreenRoute) {
         HomeScreen(
             onFABClicked = onFABClicked,
+            onNavigateToTimerResult = onNavigateToTimerResult,
         )
     }
     composable(categorySelectionScreenRoute) {

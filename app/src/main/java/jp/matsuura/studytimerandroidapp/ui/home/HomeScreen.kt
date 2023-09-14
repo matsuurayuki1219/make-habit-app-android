@@ -37,6 +37,7 @@ import jp.matsuura.studytimerandroidapp.ui.timer.PreviewUiStateProvider
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onFABClicked: () -> Unit,
+    onNavigateToTimerResult: (transactionId: Int, categoryId: Int) -> Unit,
 ) {
 
     val snackBarHostState = remember { SnackbarHostState() }
@@ -55,8 +56,7 @@ fun HomeScreen(
         uiState = uiState,
         snackBarHostState = snackBarHostState,
         onFABClicked = onFABClicked,
-        // TODO: 後で画面遷移を実装する。
-        onTransactionItemClicked = {},
+        onTransactionItemClicked = onNavigateToTimerResult,
     )
 
 }
@@ -67,7 +67,7 @@ private fun HomeScreen(
     uiState: HomeViewModel.UiState,
     snackBarHostState: SnackbarHostState,
     onFABClicked: () -> Unit,
-    onTransactionItemClicked: (TransactionDetailModel) -> Unit,
+    onTransactionItemClicked: (transactionId: Int, categoryId: Int) -> Unit,
 ) {
     StudyTimerAndroidAppTheme {
         Scaffold(
@@ -123,6 +123,6 @@ private fun HomeScreenPreview(
         uiState = uiState,
         snackBarHostState = remember { SnackbarHostState() },
         onFABClicked = {},
-        onTransactionItemClicked = {},
+        onTransactionItemClicked = { _, _ -> },
     )
 }
