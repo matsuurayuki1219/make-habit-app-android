@@ -36,5 +36,4 @@ jobs:
           serviceAccountJson: service_account.json
           packageName: jp.matsuura.makehabit.androidapp
           releaseFile: app/build/outputs/bundle/release/app-release.aab
-          track: beta
-          whatsNewDirectory: whatsnew/
+          track: internalsharing
