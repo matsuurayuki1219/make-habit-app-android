@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "jp.matsuura.studytimerandroidapp"
+    namespace = "jp.matsuura.makehabit.androidapp"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "jp.matsuura.studytimerandroidapp"
+        applicationId = "jp.matsuura.makehabit.androidapp"
         minSdk = 26
         targetSdk = 33
         versionCode = 1
@@ -20,6 +20,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
         }
     }
 

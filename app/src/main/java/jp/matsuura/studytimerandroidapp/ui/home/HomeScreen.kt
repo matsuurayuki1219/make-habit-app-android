@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import jp.matsuura.studytimerandroidapp.R
+import jp.matsuura.makehabit.androidapp.R
 import jp.matsuura.studytimerandroidapp.extension.observeWithLifecycle
 import jp.matsuura.studytimerandroidapp.model.TransactionDetailModel
 import jp.matsuura.studytimerandroidapp.ui.common.AppTopBar

@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import jp.matsuura.studytimerandroidapp.R
+import jp.matsuura.makehabit.androidapp.R
 import jp.matsuura.studytimerandroidapp.extension.observeWithLifecycle
 import jp.matsuura.studytimerandroidapp.ui.common.AppBackTopBar
 import jp.matsuura.studytimerandroidapp.ui.common.AppButton

@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jp.matsuura.studytimerandroidapp.R
+import jp.matsuura.makehabit.androidapp.R
 import jp.matsuura.studytimerandroidapp.extension.observeWithLifecycle
 import jp.matsuura.studytimerandroidapp.ui.category_selection.components.CategoryItem
 import jp.matsuura.studytimerandroidapp.ui.common.AppBackTopBar

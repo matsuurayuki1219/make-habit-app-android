@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import jp.matsuura.studytimerandroidapp.R
+import jp.matsuura.makehabit.androidapp.R
 import jp.matsuura.studytimerandroidapp.extension.observeWithLifecycle
 import jp.matsuura.studytimerandroidapp.model.CategoryModel
 import jp.matsuura.studytimerandroidapp.ui.category_selection.components.CategoryItem

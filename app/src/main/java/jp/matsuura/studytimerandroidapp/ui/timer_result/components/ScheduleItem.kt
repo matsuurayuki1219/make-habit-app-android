@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import jp.matsuura.studytimerandroidapp.R
+import jp.matsuura.makehabit.androidapp.R
 import jp.matsuura.studytimerandroidapp.extension.toDate
 import jp.matsuura.studytimerandroidapp.extension.toTime
 import java.time.OffsetDateTime
