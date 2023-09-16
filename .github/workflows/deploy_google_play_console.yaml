@@ -14,10 +14,11 @@ jobs:
       - name: set up JDK 17
         uses: actions/setup-java@v2
         with:
+          distribution: 'temurin'
           java-version: 17
 
       - name: Decode Keystore
-        run: echo ${{ secrets.ENCODED_RELEASE_KEYSTORE }} | base64 --decode > ${{ makehabitapp.keystore }}
+        run: echo ${{ secrets.ENCODED_RELEASE_KEYSTORE }} | base64 --decode > makehabitapp.keystore
 
       - name: Generate AAB
         run: ./gradlew :app:bundleRelease
