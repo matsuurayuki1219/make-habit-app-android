@@ -41,18 +41,23 @@ fun ScheduleItem(
         )
 
         Text(
-            modifier = Modifier.constrainAs(title) {
-                top.linkTo(icon.top)
-                start.linkTo(icon.end, margin = 24.dp)
-                bottom.linkTo(icon.bottom)
-            }, text = stringResource(id = R.string.timer_result_schedule_title), fontSize = 16.sp
+            modifier = Modifier
+                .constrainAs(title) {
+                    top.linkTo(icon.top)
+                    start.linkTo(icon.end, margin = 8.dp)
+                    bottom.linkTo(icon.bottom)
+                }
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            text = stringResource(id = R.string.timer_result_schedule_title),
+            fontSize = 16.sp
         )
 
         Text(
-            modifier = Modifier.constrainAs(startTitle) {
-                top.linkTo(title.bottom, margin = 24.dp)
-                start.linkTo(title.start)
-            }
+            modifier = Modifier
+                .constrainAs(startTitle) {
+                    top.linkTo(title.bottom, margin = 24.dp)
+                    start.linkTo(title.start)
+                }
                 .padding(horizontal = 12.dp, vertical = 8.dp),
             text = stringResource(id = R.string.timer_result_schedule_start_title),
             fontSize = 14.sp
