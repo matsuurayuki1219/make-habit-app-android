@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "StudyTimerAndroidApp"
+rootProject.name = "MakeHabitAndroidApp"
 include(":app")
