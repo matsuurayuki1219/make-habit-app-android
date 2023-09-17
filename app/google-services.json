@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "696408565065",
+    "project_id": "makehabitapp-f49d0",
+    "storage_bucket": "makehabitapp-f49d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:696408565065:android:c7f8a228273b46c9f1a698",
+        "android_client_info": {
+          "package_name": "jp.matsuura.makehabit.androidapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1F-mBIrTNKNAiknrdWh5u9aCa0QrvmWw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
