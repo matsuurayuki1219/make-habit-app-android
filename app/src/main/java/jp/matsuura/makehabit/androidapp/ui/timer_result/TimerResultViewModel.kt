@@ -52,6 +52,24 @@ class TimerResultViewModel @Inject constructor(
         }
     }
 
+    fun onStartDateClicked() {
+        viewModelScope.launch {
+            val date = _uiState.value.transaction?.dateOfStartedAt?.toInstant()
+            _uiEvent.send(UiEvent.StartDateClicked(date?.epochSecond))
+        }
+    }
+
+    fun onStartDateConfirmed(date: Long?) {}
+
+    fun onEndDateClicked() {
+        viewModelScope.launch {
+            val date = _uiState.value.transaction?.dateOfEndedAt?.toInstant()
+            _uiEvent.send(UiEvent.EndDateClicked(date?.epochSecond))
+        }
+    }
+
+    fun onEndDateConfirmed(date: Long?) {}
+
     data class UiState(
         val isProgressVisible: Boolean,
         val transaction: TransactionDetailModel?,
@@ -66,5 +84,7 @@ class TimerResultViewModel @Inject constructor(
 
     sealed interface UiEvent {
         object UnknownError : UiEvent
+        data class StartDateClicked(val currentData: Long?) : UiEvent
+        data class EndDateClicked(val currentData: Long?) : UiEvent
     }
 }

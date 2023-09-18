@@ -104,4 +104,9 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
 
+    // TODO: delete this dependency after updating compose bom.
+    // Data Picker
+    implementation("androidx.compose.material3:material3:1.1.0")
+
+
 }
