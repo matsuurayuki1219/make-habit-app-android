@@ -37,4 +37,4 @@ jobs:
           serviceAccountJson: service_account.json
           packageName: jp.matsuura.makehabit.androidapp
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
-          track: internal
+          track: production
