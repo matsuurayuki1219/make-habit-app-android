@@ -26,10 +26,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jp.matsuura.makehabit.androidapp.R
 import jp.matsuura.makehabit.androidapp.extension.observeWithLifecycle
+import jp.matsuura.makehabit.androidapp.model.TimeModel
 import jp.matsuura.makehabit.androidapp.ui.common.AppBackTopBar
 import jp.matsuura.makehabit.androidapp.ui.common.AppButton
 import jp.matsuura.makehabit.androidapp.ui.common.AppDataPicker
 import jp.matsuura.makehabit.androidapp.ui.common.AppDialogState
+import jp.matsuura.makehabit.androidapp.ui.common.AppTimePicker
 import jp.matsuura.makehabit.androidapp.ui.common.rememberAppDialogState
 import jp.matsuura.makehabit.androidapp.ui.theme.StudyTimerAndroidAppTheme
 import jp.matsuura.makehabit.androidapp.ui.timer_result.components.ScheduleItem
@@ -38,6 +40,8 @@ import jp.matsuura.makehabit.androidapp.ui.timer_result.components.SumTimeItem
 sealed interface DialogType {
     data class StartDatePicker(val currentData: Long?) : DialogType
     data class EndDatePicker(val currentData: Long?) : DialogType
+    data class StartTimePicker(val currentTime: Long?) : DialogType
+    data class EndTimePicker(val currentTime: Long?) : DialogType
 }
 
 @Composable
@@ -67,6 +71,14 @@ fun TimerResultScreen(
             is TimerResultViewModel.UiEvent.EndDateClicked -> {
                 dialogState.show(DialogType.EndDatePicker(it.currentData))
             }
+
+            is TimerResultViewModel.UiEvent.StartTimeClicked -> {
+                dialogState.show(DialogType.StartTimePicker(it.currentData))
+            }
+
+            is TimerResultViewModel.UiEvent.EndTimeClicked -> {
+                dialogState.show(DialogType.EndTimePicker(it.currentData))
+            }
         }
     }
 
@@ -76,6 +88,8 @@ fun TimerResultScreen(
             type = dialogType,
             onStartDateConfirmed = viewModel::onStartDateConfirmed,
             onEndDateConfirmed = viewModel::onEndDateConfirmed,
+            onStartTimeConfirmed = viewModel::onStartTimeConfirmed,
+            onEndTimeConfirmed = viewModel::onEndTimeConfirmed,
             onDismiss = dialogState::dismiss,
         )
     }
@@ -88,6 +102,8 @@ fun TimerResultScreen(
         onFinishButtonClicked = onFinishButtonClicked,
         onStartDateClick = viewModel::onStartDateClicked,
         onEndDateClick = viewModel::onEndDateClicked,
+        onStartTimeClick = viewModel::onStartTimeClicked,
+        onEndTimeClick = viewModel::onEndTimeClicked,
     )
 
 }
@@ -100,6 +116,8 @@ private fun TimerResultScreen(
     onFinishButtonClicked: () -> Unit,
     onStartDateClick: () -> Unit,
     onEndDateClick: () -> Unit,
+    onStartTimeClick: () -> Unit,
+    onEndTimeClick: () -> Unit,
 ) {
     StudyTimerAndroidAppTheme {
         Scaffold(
@@ -139,8 +157,8 @@ private fun TimerResultScreen(
                             endData = uiState.transaction.dateOfEndedAt,
                             onStartDateClick = onStartDateClick,
                             onEndDateClick = onEndDateClick,
-                            onStartTimeClick = {},
-                            onEndTimeClick = {},
+                            onStartTimeClick = onStartTimeClick,
+                            onEndTimeClick = onEndTimeClick,
                         )
 
                         Divider(modifier = Modifier.height(1.dp))
@@ -179,6 +197,8 @@ private fun DialogHandler(
     type: DialogType,
     onStartDateConfirmed: (Long?) -> Unit,
     onEndDateConfirmed: (Long?) -> Unit,
+    onStartTimeConfirmed: (TimeModel) -> Unit,
+    onEndTimeConfirmed: (TimeModel) -> Unit,
     onDismiss: () -> Unit,
 ) {
     when (type) {
@@ -197,6 +217,22 @@ private fun DialogHandler(
                 onDismiss = onDismiss,
             )
         }
+
+        is DialogType.StartTimePicker -> {
+            AppTimePicker(
+                currentTime = type.currentTime,
+                onUpdateTime = onStartTimeConfirmed,
+                onDismiss = onDismiss,
+            )
+        }
+
+        is DialogType.EndTimePicker -> {
+            AppTimePicker(
+                currentTime = type.currentTime,
+                onUpdateTime = onEndTimeConfirmed,
+                onDismiss = onDismiss,
+            )
+        }
     }
 }
 
@@ -212,5 +248,7 @@ private fun TimerResultScreenPreview(
         onFinishButtonClicked = {},
         onStartDateClick = {},
         onEndDateClick = {},
+        onStartTimeClick = {},
+        onEndTimeClick = {},
     )
 }

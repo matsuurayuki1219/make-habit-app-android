@@ -106,7 +106,7 @@ dependencies {
 
     // TODO: delete this dependency after updating compose bom.
     // Data Picker
-    implementation("androidx.compose.material3:material3:1.1.0")
+    implementation("androidx.compose.material3:material3:1.1.1")
 
 
 }
