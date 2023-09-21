@@ -3,6 +3,7 @@ package jp.matsuura.makehabit.androidapp.ui.timer_result.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -40,18 +41,24 @@ fun ScheduleItem(
         )
 
         Text(
-            modifier = Modifier.constrainAs(title) {
-                top.linkTo(icon.top)
-                start.linkTo(icon.end, margin = 24.dp)
-                bottom.linkTo(icon.bottom)
-            }, text = stringResource(id = R.string.timer_result_schedule_title), fontSize = 16.sp
+            modifier = Modifier
+                .constrainAs(title) {
+                    top.linkTo(icon.top)
+                    start.linkTo(icon.end, margin = 8.dp)
+                    bottom.linkTo(icon.bottom)
+                }
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            text = stringResource(id = R.string.timer_result_schedule_title),
+            fontSize = 16.sp
         )
 
         Text(
-            modifier = Modifier.constrainAs(startTitle) {
-                top.linkTo(title.bottom, margin = 24.dp)
-                start.linkTo(title.start)
-            },
+            modifier = Modifier
+                .constrainAs(startTitle) {
+                    top.linkTo(title.bottom, margin = 24.dp)
+                    start.linkTo(title.start)
+                }
+                .padding(horizontal = 12.dp, vertical = 8.dp),
             text = stringResource(id = R.string.timer_result_schedule_start_title),
             fontSize = 14.sp
         )
@@ -61,7 +68,8 @@ fun ScheduleItem(
                 .constrainAs(endTitle) {
                     top.linkTo(startTitle.bottom, margin = 24.dp)
                     start.linkTo(title.start)
-                },
+                }
+                .padding(horizontal = 12.dp, vertical = 8.dp),
             text = stringResource(id = R.string.timer_result_schedule_end_title),
             fontSize = 14.sp
         )
@@ -73,7 +81,8 @@ fun ScheduleItem(
                     start.linkTo(startTitle.end, margin = 30.dp)
                     bottom.linkTo(startTitle.bottom)
                 }
-                .clickable { onStartDateClick() },
+                .clickable { onStartDateClick() }
+                .padding(horizontal = 12.dp, vertical = 8.dp),
             text = startData.toDate(), fontSize = 14.sp
         )
 
@@ -84,7 +93,8 @@ fun ScheduleItem(
                     start.linkTo(endTitle.end, margin = 30.dp)
                     bottom.linkTo(endTitle.bottom)
                 }
-                .clickable { onEndDateClick() },
+                .clickable { onEndDateClick() }
+                .padding(horizontal = 12.dp, vertical = 8.dp),
             text = endData.toDate(), fontSize = 14.sp
         )
 
@@ -95,7 +105,8 @@ fun ScheduleItem(
                     start.linkTo(startDay.end, margin = 30.dp)
                     bottom.linkTo(startDay.bottom)
                 }
-                .clickable { onStartTimeClick() },
+                .clickable { onStartTimeClick() }
+                .padding(horizontal = 12.dp, vertical = 8.dp),
             text = startData.toTime(), fontSize = 14.sp
         )
 
@@ -106,7 +117,8 @@ fun ScheduleItem(
                     start.linkTo(endDay.end, margin = 30.dp)
                     bottom.linkTo(endDay.bottom)
                 }
-                .clickable { onEndTimeClick() },
+                .clickable { onEndTimeClick() }
+                .padding(horizontal = 12.dp, vertical = 8.dp),
             text = endData.toTime(), fontSize = 14.sp
         )
 

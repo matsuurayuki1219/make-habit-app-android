@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.matsuura.makehabit.androidapp.domain.GetDetailTransactionUseCase
+import jp.matsuura.makehabit.androidapp.model.TimeModel
 import jp.matsuura.makehabit.androidapp.model.TransactionDetailModel
 import jp.matsuura.makehabit.androidapp.ui.timer.TimerViewModel
 import jp.matsuura.makehabit.androidapp.ui.timer_result.navigation.TimerResultScreenArgs
@@ -52,6 +53,42 @@ class TimerResultViewModel @Inject constructor(
         }
     }
 
+    fun onStartDateClicked() {
+        viewModelScope.launch {
+            val date = _uiState.value.transaction?.dateOfStartedAt?.toInstant()
+            _uiEvent.send(UiEvent.StartDateClicked(date?.epochSecond))
+        }
+    }
+
+    fun onStartDateConfirmed(date: Long?) {}
+
+    fun onEndDateClicked() {
+        viewModelScope.launch {
+            val date = _uiState.value.transaction?.dateOfEndedAt?.toInstant()
+            _uiEvent.send(UiEvent.EndDateClicked(date?.epochSecond))
+        }
+    }
+
+    fun onEndDateConfirmed(date: Long?) {}
+
+    fun onStartTimeClicked() {
+        viewModelScope.launch {
+            val date = _uiState.value.transaction?.dateOfStartedAt?.toInstant()
+            _uiEvent.send(UiEvent.StartDateClicked(date?.epochSecond))
+        }
+    }
+
+    fun onStartTimeConfirmed(time: TimeModel) {}
+
+    fun onEndTimeClicked() {
+        viewModelScope.launch {
+            val date = _uiState.value.transaction?.dateOfStartedAt?.toInstant()
+            _uiEvent.send(UiEvent.EndTimeClicked(date?.epochSecond))
+        }
+    }
+
+    fun onEndTimeConfirmed(time: TimeModel) {}
+
     data class UiState(
         val isProgressVisible: Boolean,
         val transaction: TransactionDetailModel?,
@@ -66,5 +103,9 @@ class TimerResultViewModel @Inject constructor(
 
     sealed interface UiEvent {
         object UnknownError : UiEvent
+        data class StartDateClicked(val currentData: Long?) : UiEvent
+        data class EndDateClicked(val currentData: Long?) : UiEvent
+        data class StartTimeClicked(val currentData: Long?) : UiEvent
+        data class EndTimeClicked(val currentData: Long?) : UiEvent
     }
 }

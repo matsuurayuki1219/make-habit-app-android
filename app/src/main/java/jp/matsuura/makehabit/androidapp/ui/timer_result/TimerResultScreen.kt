@@ -1,5 +1,6 @@
 package jp.matsuura.makehabit.androidapp.ui.timer_result
 
+import android.app.Dialog
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,11 +26,23 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import jp.matsuura.makehabit.androidapp.R
 import jp.matsuura.makehabit.androidapp.extension.observeWithLifecycle
+import jp.matsuura.makehabit.androidapp.model.TimeModel
 import jp.matsuura.makehabit.androidapp.ui.common.AppBackTopBar
 import jp.matsuura.makehabit.androidapp.ui.common.AppButton
+import jp.matsuura.makehabit.androidapp.ui.common.AppDataPicker
+import jp.matsuura.makehabit.androidapp.ui.common.AppDialogState
+import jp.matsuura.makehabit.androidapp.ui.common.AppTimePicker
+import jp.matsuura.makehabit.androidapp.ui.common.rememberAppDialogState
 import jp.matsuura.makehabit.androidapp.ui.theme.StudyTimerAndroidAppTheme
 import jp.matsuura.makehabit.androidapp.ui.timer_result.components.ScheduleItem
 import jp.matsuura.makehabit.androidapp.ui.timer_result.components.SumTimeItem
+
+sealed interface DialogType {
+    data class StartDatePicker(val currentData: Long?) : DialogType
+    data class EndDatePicker(val currentData: Long?) : DialogType
+    data class StartTimePicker(val currentTime: Long?) : DialogType
+    data class EndTimePicker(val currentTime: Long?) : DialogType
+}
 
 @Composable
 fun TimerResultScreen(
@@ -41,6 +54,8 @@ fun TimerResultScreen(
     val snackBarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
 
+    val dialogState = rememberAppDialogState<DialogType>()
+
     viewModel.uiEvent.observeWithLifecycle {
         when (it) {
             is TimerResultViewModel.UiEvent.UnknownError -> {
@@ -48,7 +63,35 @@ fun TimerResultScreen(
                     context.getString(R.string.common_unknown_error_message)
                 )
             }
+
+            is TimerResultViewModel.UiEvent.StartDateClicked -> {
+                dialogState.show(DialogType.StartDatePicker(it.currentData))
+            }
+
+            is TimerResultViewModel.UiEvent.EndDateClicked -> {
+                dialogState.show(DialogType.EndDatePicker(it.currentData))
+            }
+
+            is TimerResultViewModel.UiEvent.StartTimeClicked -> {
+                dialogState.show(DialogType.StartTimePicker(it.currentData))
+            }
+
+            is TimerResultViewModel.UiEvent.EndTimeClicked -> {
+                dialogState.show(DialogType.EndTimePicker(it.currentData))
+            }
         }
+    }
+
+    if (dialogState.isShow) {
+        val dialogType = dialogState.type ?: return
+        DialogHandler(
+            type = dialogType,
+            onStartDateConfirmed = viewModel::onStartDateConfirmed,
+            onEndDateConfirmed = viewModel::onEndDateConfirmed,
+            onStartTimeConfirmed = viewModel::onStartTimeConfirmed,
+            onEndTimeConfirmed = viewModel::onEndTimeConfirmed,
+            onDismiss = dialogState::dismiss,
+        )
     }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -57,16 +100,24 @@ fun TimerResultScreen(
         snackBarHostState = snackBarHostState,
         onNavigationIconClicked = onNavigationIconClicked,
         onFinishButtonClicked = onFinishButtonClicked,
+        onStartDateClick = viewModel::onStartDateClicked,
+        onEndDateClick = viewModel::onEndDateClicked,
+        onStartTimeClick = viewModel::onStartTimeClicked,
+        onEndTimeClick = viewModel::onEndTimeClicked,
     )
+
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TimerResultScreen(
     uiState: TimerResultViewModel.UiState,
     snackBarHostState: SnackbarHostState,
     onNavigationIconClicked: () -> Unit,
     onFinishButtonClicked: () -> Unit,
+    onStartDateClick: () -> Unit,
+    onEndDateClick: () -> Unit,
+    onStartTimeClick: () -> Unit,
+    onEndTimeClick: () -> Unit,
 ) {
     StudyTimerAndroidAppTheme {
         Scaffold(
@@ -104,10 +155,10 @@ private fun TimerResultScreen(
                             modifier = Modifier.padding(top = 24.dp, bottom = 30.dp),
                             startData = uiState.transaction.dateOfStartedAt,
                             endData = uiState.transaction.dateOfEndedAt,
-                            onStartDateClick = {},
-                            onEndDateClick = {},
-                            onStartTimeClick = {},
-                            onEndTimeClick = {},
+                            onStartDateClick = onStartDateClick,
+                            onEndDateClick = onEndDateClick,
+                            onStartTimeClick = onStartTimeClick,
+                            onEndTimeClick = onEndTimeClick,
                         )
 
                         Divider(modifier = Modifier.height(1.dp))
@@ -141,6 +192,50 @@ private fun TimerResultScreen(
     }
 }
 
+@Composable
+private fun DialogHandler(
+    type: DialogType,
+    onStartDateConfirmed: (Long?) -> Unit,
+    onEndDateConfirmed: (Long?) -> Unit,
+    onStartTimeConfirmed: (TimeModel) -> Unit,
+    onEndTimeConfirmed: (TimeModel) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    when (type) {
+        is DialogType.StartDatePicker -> {
+            AppDataPicker(
+                currentDate = type.currentData,
+                onUpdateDate = onStartDateConfirmed,
+                onDismiss = onDismiss,
+            )
+        }
+
+        is DialogType.EndDatePicker -> {
+            AppDataPicker(
+                currentDate = type.currentData,
+                onUpdateDate = onEndDateConfirmed,
+                onDismiss = onDismiss,
+            )
+        }
+
+        is DialogType.StartTimePicker -> {
+            AppTimePicker(
+                currentTime = type.currentTime,
+                onUpdateTime = onStartTimeConfirmed,
+                onDismiss = onDismiss,
+            )
+        }
+
+        is DialogType.EndTimePicker -> {
+            AppTimePicker(
+                currentTime = type.currentTime,
+                onUpdateTime = onEndTimeConfirmed,
+                onDismiss = onDismiss,
+            )
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 private fun TimerResultScreenPreview(
@@ -151,5 +246,9 @@ private fun TimerResultScreenPreview(
         snackBarHostState = remember { SnackbarHostState() },
         onNavigationIconClicked = {},
         onFinishButtonClicked = {},
+        onStartDateClick = {},
+        onEndDateClick = {},
+        onStartTimeClick = {},
+        onEndTimeClick = {},
     )
 }

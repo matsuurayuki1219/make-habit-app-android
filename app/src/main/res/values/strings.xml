@@ -6,6 +6,7 @@
     <string name="common_next">次へ</string>
     <string name="common_finish">終了</string>
     <string name="common_ok">OK</string>
+    <string name="common_cancel">CANCEL</string>
 
     <!-- Home Screen -->
     <string name="home_title_text">習慣化を始めよう</string>
