@@ -31,7 +31,7 @@ android {
         create("release") {
             keyAlias = "make-habit-android-app"
             keyPassword = System.getenv("RELEASE_KEYSTORE_KEY_PASSWORD")
-            storeFile = file("makehabitapp.keystore")
+            storeFile = file("android/makehabitapp.keystore")
             storePassword = System.getenv("RELEASE_KEYSTORE_STORE_PASSWORD")
         }
     }
