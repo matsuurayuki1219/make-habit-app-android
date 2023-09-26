@@ -17,7 +17,7 @@ android {
         applicationId = "jp.matsuura.makehabit.androidapp"
         minSdk = 26
         targetSdk = 33
-        versionCode = 1
+        versionCode = 3
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -30,13 +30,24 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            keyAlias = "makehabitapp.keystore"
+            keyPassword = System.getenv("RELEASE_KEYSTORE_KEY_PASSWORD")
+            storeFile = file("makehabitapp.keystore")
+            storePassword = System.getenv("RELEASE_KEYSTORE_STORE_PASSWORD")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
