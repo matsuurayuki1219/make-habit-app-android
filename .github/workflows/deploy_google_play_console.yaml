@@ -18,7 +18,7 @@ jobs:
           java-version: 17
 
       - name: Decode Keystore
-        run: echo ${{ secrets.ENCODED_RELEASE_KEYSTORE }} | base64 --decode > android/makehabitapp.keystore
+        run: echo ${{ secrets.ENCODED_RELEASE_KEYSTORE }} | base64 --decode > app/makehabitapp.keystore
 
       - name: Generate AAB
         run: ./gradlew :app:bundleRelease
