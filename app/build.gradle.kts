@@ -28,7 +28,7 @@ android {
     }
 
     signingConfigs {
-        getByName("release") {
+        create("release") {
             keyAlias = "make-habit-android-app"
             keyPassword = System.getenv("RELEASE_KEYSTORE_KEY_PASSWORD")
             storeFile = file("makehabitapp.keystore")
@@ -44,6 +44,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
